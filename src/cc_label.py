@@ -1,5 +1,3 @@
-"""Connected-component labeling using DFS flood fill."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -106,7 +104,7 @@ def connected_components(binary_mask: np.ndarray, connectivity: int = 8) -> Tupl
 
 
 def largest_component(components: List[ComponentStats]) -> Optional[ComponentStats]:
-    """Return the component with maximum area, or None if empty."""
+    """Return the component with maximum area or None if empty"""
     if not components:
         return None
     return max(components, key=lambda c: c.area)

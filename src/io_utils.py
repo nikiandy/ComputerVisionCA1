@@ -1,5 +1,3 @@
-"""I/O, annotation and visualisation helpers using allowed cv2 calls only."""
-
 from __future__ import annotations
 
 from pathlib import Path
@@ -10,17 +8,17 @@ import numpy as np
 
 
 def ensure_dir(path: Path) -> None:
-    """Create directory if it does not exist."""
+    """Create directory if it does not exist"""
     path.mkdir(parents=True, exist_ok=True)
 
 
 def load_bgr_image(path: Path) -> Optional[np.ndarray]:
-    """Load color image as BGR. Returns None if unreadable."""
+    """Load color image as BGR. Returns None if unreadable"""
     return cv2.imread(str(path), cv2.IMREAD_COLOR)
 
 
 def save_image(path: Path, image: np.ndarray) -> bool:
-    """Save image to disk, creating parent directory as needed."""
+    """Save image to disk, creating parent directory as needed"""
     ensure_dir(path.parent)
     return bool(cv2.imwrite(str(path), image))
 
@@ -31,18 +29,18 @@ def binary_to_uint8(mask: np.ndarray) -> np.ndarray:
 
 
 def gray_to_bgr(gray: np.ndarray) -> np.ndarray:
-    """Convert grayscale to 3-channel BGR using numpy stacking."""
+    """Convert grayscale to 3-channel BGR using numpy stacking"""
     g = gray.astype(np.uint8)
     return np.stack([g, g, g], axis=-1)
 
 
 def mask_to_bgr(mask: np.ndarray) -> np.ndarray:
-    """Convert binary mask to displayable BGR image."""
+    """Convert binary mask to displayable BGR image"""
     return gray_to_bgr(binary_to_uint8(mask))
 
 
 def label_map_to_color(labels: np.ndarray, focus_label: int | None = None) -> np.ndarray:
-    """Create deterministic pseudo-color visualisation for label map."""
+    """Create deterministic pseudo-color visualisation for label map"""
     h, w = labels.shape
     colored = np.zeros((h, w, 3), dtype=np.uint8)
     fg = labels > 0
@@ -68,7 +66,7 @@ def annotate_image(
     bbox: Tuple[int, int, int, int] | None = None,
     centroid_xy: Tuple[float, float] | None = None,
 ) -> np.ndarray:
-    """Overlay result text and simple shapes onto the image."""
+    """Overlay result text and simple shapes onto the image"""
     out = image_bgr.copy()
     lines_list = list(lines)
     if not lines_list:

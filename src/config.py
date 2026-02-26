@@ -1,11 +1,9 @@
-"""Configuration values for the O-ring inspection pipeline."""
-
 from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
 class PipelineConfig:
-    """Runtime-tunable thresholds and processing parameters."""
+    """Runtime-tunable thresholds and processing parameters"""
 
     morphology_kernel_size: int = 3
     morphology_iterations: int = 1

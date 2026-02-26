@@ -1,5 +1,3 @@
-"""Feature extraction and pass/fail logic for O-ring inspection."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -27,7 +25,7 @@ def _ray_first_last_hit(
     centroid_xy: Tuple[float, float],
     angle_deg: float,
 ) -> Tuple[int | None, int | None]:
-    """Sample one ray and return first and last foreground hit distances."""
+    """Sample one ray and return first and last foreground hit distances"""
     h, w = binary_mask.shape
     cx, cy = centroid_xy
     theta = np.deg2rad(angle_deg)
@@ -65,9 +63,9 @@ def radial_thickness_profile(
     centroid_xy: Tuple[float, float],
     angle_step_degrees: int = 2,
 ) -> np.ndarray:
-    """Compute radial thickness for multiple rays around the centroid."""
+    """Compute radial thickness for multiple rays around the centroid"""
     if angle_step_degrees <= 0:
-        raise ValueError("angle_step_degrees must be > 0.")
+        raise ValueError("angle_step_degrees must be > 0")
 
     angles = np.arange(0, 360, angle_step_degrees, dtype=np.float32)
     thickness_values = np.full(angles.shape[0], np.nan, dtype=np.float32)
@@ -87,7 +85,7 @@ def classify_oring(
     centroid_xy: Tuple[float, float],
     config: PipelineConfig,
 ) -> ClassificationResult:
-    """Classify O-ring as pass/fail using radial thickness consistency."""
+    """Classify O-ring as pass/fail using radial thickness consistency"""
     thickness = radial_thickness_profile(
         ring_mask=ring_mask,
         centroid_xy=centroid_xy,

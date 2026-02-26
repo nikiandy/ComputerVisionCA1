@@ -1,5 +1,3 @@
-"""Histogram-based thresholding routines implemented with numpy only."""
-
 from __future__ import annotations
 
 from typing import Tuple
@@ -8,7 +6,7 @@ import numpy as np
 
 
 def bgr_to_grayscale(image_bgr: np.ndarray) -> np.ndarray:
-    """Convert BGR image to uint8 grayscale without cv2.cvtColor."""
+    """Convert BGR image to uint8 grayscale without cv2.cvtColor"""
     # split channels
     b = image_bgr[:, :, 0].astype(np.float32)
     g = image_bgr[:, :, 1].astype(np.float32)
@@ -19,12 +17,12 @@ def bgr_to_grayscale(image_bgr: np.ndarray) -> np.ndarray:
 
 
 def histogram_256(gray: np.ndarray) -> np.ndarray:
-    """Return a 256-bin histogram of grayscale values."""
+    """Return a 256-bin histogram of grayscale values"""
     return np.bincount(gray.ravel(), minlength=256).astype(np.int64)
 
 
 def otsu_threshold_from_histogram(hist: np.ndarray) -> int:
-    """Compute Otsu threshold using only histogram counts."""
+    """Compute Otsu threshold using only histogram counts"""
     total = int(hist.sum())
     if total == 0:
         return 0
@@ -64,7 +62,7 @@ def otsu_threshold_from_histogram(hist: np.ndarray) -> int:
 
 
 def otsu_threshold(gray: np.ndarray) -> Tuple[int, np.ndarray]:
-    """Return (threshold, histogram) for a grayscale image."""
+    """Return (threshold, histogram) for a grayscale image"""
     hist = histogram_256(gray)
     threshold = otsu_threshold_from_histogram(hist)
     return threshold, hist
@@ -77,7 +75,7 @@ def threshold_with_auto_polarity(
     max_foreground_ratio: float = 0.75,
 ) -> Tuple[np.ndarray, bool, float]:
     """
-    Apply threshold and auto-fix foreground polarity.
+    Apply threshold and auto-fix foreground polarity
 
     Returns:
         binary_mask (uint8 in {0,1}), inverted_flag, foreground_ratio

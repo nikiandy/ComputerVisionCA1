@@ -1,5 +1,3 @@
-"""Binary morphology (dilate/erode/close/open) using numpy only."""
-
 from __future__ import annotations
 
 import numpy as np
@@ -7,7 +5,7 @@ import numpy as np
 
 def _validate_kernel_size(kernel_size: int) -> None:
     if kernel_size <= 0 or kernel_size % 2 == 0:
-        raise ValueError("kernel_size must be a positive odd integer.")
+        raise ValueError("kernel_size must be a positive odd integer")
 
 
 def _as_binary(mask: np.ndarray) -> np.ndarray:
@@ -15,7 +13,7 @@ def _as_binary(mask: np.ndarray) -> np.ndarray:
 
 
 def _shift_with_zero_padding(binary: np.ndarray, dy: int, dx: int) -> np.ndarray:
-    """Shift image by (dy, dx) with zeros filled outside image bounds."""
+    """Shift image by (dy, dx) with zeros filled outside image bounds"""
     h, w = binary.shape
     shifted = np.zeros_like(binary, dtype=np.uint8)
 
@@ -34,7 +32,7 @@ def _shift_with_zero_padding(binary: np.ndarray, dy: int, dx: int) -> np.ndarray
 
 
 def binary_dilation(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
-    """Binary dilation with a square structuring element."""
+    """Binary dilation with a square structuring element"""
     _validate_kernel_size(kernel_size)
     binary = _as_binary(mask)
     radius = kernel_size // 2
@@ -50,7 +48,7 @@ def binary_dilation(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
 
 
 def binary_erosion(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
-    """Binary erosion with a square structuring element."""
+    """Binary erosion with a square structuring element"""
     _validate_kernel_size(kernel_size)
     binary = _as_binary(mask)
     radius = kernel_size // 2
@@ -66,7 +64,7 @@ def binary_erosion(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
 
 
 def binary_closing(mask: np.ndarray, kernel_size: int = 3, iterations: int = 1) -> np.ndarray:
-    """Binary closing: dilation followed by erosion."""
+    """Binary closing: dilation followed by erosion"""
     out = _as_binary(mask)
     for _ in range(max(0, iterations)):
         # close tiny holes
@@ -76,7 +74,7 @@ def binary_closing(mask: np.ndarray, kernel_size: int = 3, iterations: int = 1) 
 
 
 def binary_opening(mask: np.ndarray, kernel_size: int = 3, iterations: int = 1) -> np.ndarray:
-    """Binary opening: erosion followed by dilation."""
+    """Binary opening: erosion followed by dilation"""
     out = _as_binary(mask)
     for _ in range(max(0, iterations)):
         out = binary_erosion(out, kernel_size=kernel_size)

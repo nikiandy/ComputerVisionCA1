@@ -1,5 +1,3 @@
-"""Main entry point for Computer Vision Assignment 1 (O-ring inspection)."""
-
 from __future__ import annotations
 
 import argparse
@@ -44,7 +42,7 @@ class ImageSummary:
 
 
 def resolve_path(path_arg: str) -> Path:
-    """Resolve absolute/relative path arguments robustly."""
+    """Resolve absolute/relative path arguments robustly"""
     p = Path(path_arg)
     if p.is_absolute():
         return p
@@ -52,7 +50,7 @@ def resolve_path(path_arg: str) -> Path:
 
 
 def list_image_files(images_path: Path) -> list[Path]:
-    """Get sorted input image paths."""
+    """Get sorted input image paths"""
     if not images_path.exists():
         return []
     if images_path.is_file():
@@ -72,7 +70,7 @@ def process_image(
     debug_dir: Optional[Path],
     config: PipelineConfig,
 ) -> ImageSummary:
-    """Run full O-ring pipeline for one image."""
+    """Run full O-ring pipeline for one image"""
     t0 = time.perf_counter()
     image = load_bgr_image(image_path)
     if image is None:
@@ -197,7 +195,7 @@ def _fmt_float(value: Optional[float], precision: int = 3) -> str:
 
 
 def print_summary(rows: list[ImageSummary]) -> None:
-    """Print neat per-image summary table."""
+    """Print neat per-image summary table"""
     header = (
         f"{'filename':<14} | {'threshold':>9} | {'result':<6} | {'time_ms':>9} | "
         f"{'gap_frac':>8} | {'thk_std':>8} | {'out_frac':>8} | note"
@@ -220,23 +218,23 @@ def print_summary(rows: list[ImageSummary]) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="O-ring inspection pipeline (numpy + limited cv2 I/O).")
+    parser = argparse.ArgumentParser(description="O-ring inspection pipeline (numpy + limited cv2 I/O)")
     parser.add_argument(
         "--images",
         type=str,
         default="images",
-        help="Input image folder or single image path.",
+        help="Input image folder or single image path",
     )
     parser.add_argument(
         "--output",
         type=str,
         default="output",
-        help="Output folder for annotated results.",
+        help="Output folder for annotated results",
     )
     parser.add_argument(
         "--debug",
         action="store_true",
-        help="Save intermediate pipeline images to output/debug.",
+        help="Save intermediate pipeline images to output/debug",
     )
     return parser.parse_args()
 
