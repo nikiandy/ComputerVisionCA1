@@ -59,6 +59,7 @@ def label_map_to_color(labels: np.ndarray, focus_label: int | None = None) -> np
     return colored
 
 
+# overlays the result text and simple shapes onto the image
 def annotate_image(
     image_bgr: np.ndarray,
     lines: Iterable[str],
@@ -74,12 +75,14 @@ def annotate_image(
 
     text_bg_top_left = (8, 8)
     text_bg_bottom_right = (610, 8 + 24 * len(lines_list))
+    # draw the text background rectangle
     cv2.rectangle(out, text_bg_top_left, text_bg_bottom_right, (0, 0, 0), -1)
 
     status_color = (0, 200, 0) if passed else (0, 0, 255)
     for idx, text in enumerate(lines_list):
         y = 28 + idx * 22
         color = status_color if idx == 0 else (255, 255, 255)
+        # draw the text
         cv2.putText(
             out,
             text,

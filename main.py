@@ -71,6 +71,7 @@ def process_image(
     config: PipelineConfig,
 ) -> ImageSummary:
     """Run full O-ring pipeline for one image"""
+    # start the timer
     t0 = time.perf_counter()
     # load image
     image = load_bgr_image(image_path)
@@ -105,7 +106,10 @@ def process_image(
     if config.opening_kernel_size > 0:
         cleaned = binary_opening(cleaned, kernel_size=config.opening_kernel_size, iterations=1)
 
+    # labels connected components
     labels, components = connected_components(cleaned, connectivity=8)
+
+    # find the largest component
     largest = largest_component(components)
 
     if largest is None:
@@ -144,6 +148,7 @@ def process_image(
         centroid_xy=largest.centroid,
         config=config,
     )
+    # Calculate elapsed time
     elapsed = (time.perf_counter() - t0) * 1000.0
 
     status = "PASS" if classification.passed else "FAIL"

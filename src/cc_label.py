@@ -14,6 +14,7 @@ class ComponentStats:
     centroid: Tuple[float, float]  # x y
 
 
+# labels the connected components in the binary image
 def connected_components(binary_mask: np.ndarray, connectivity: int = 8) -> Tuple[np.ndarray, List[ComponentStats]]:
     """
     Label connected components in a binary image.

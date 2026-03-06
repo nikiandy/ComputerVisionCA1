@@ -80,12 +80,12 @@ def radial_thickness_profile(
     return thickness_values
 
 
+# classifies the ring as pass/fail using radial thickness consistency
 def classify_oring(
     ring_mask: np.ndarray,
     centroid_xy: Tuple[float, float],
     config: PipelineConfig,
 ) -> ClassificationResult:
-    """Classify O-ring as pass/fail using radial thickness consistency"""
     thickness = radial_thickness_profile(
         ring_mask=ring_mask,
         centroid_xy=centroid_xy,
@@ -116,6 +116,7 @@ def classify_oring(
     outlier_threshold = max(config.outlier_sigma * thickness_std, 2.0)
     outlier_fraction = float(np.mean(np.abs(valid - thickness_mean) > outlier_threshold))
 
+    # fail reasons list is used to store the reasons for the ring to be failed
     fail_reasons = []
     if gap_fraction > config.max_gap_fraction:
         fail_reasons.append("gap_fraction above threshold")

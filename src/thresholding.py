@@ -17,11 +17,13 @@ def bgr_to_grayscale(image_bgr: np.ndarray) -> np.ndarray:
     return np.clip(gray, 0, 255).astype(np.uint8)
 
 
+# counts the number of pixels in each grayscale value
 def histogram_256(gray: np.ndarray) -> np.ndarray:
     """Return a 256-bin histogram of grayscale values"""
     return np.bincount(gray.ravel(), minlength=256).astype(np.int64)
 
 
+# finds the threshold that maximizes the between-class variance
 def otsu_threshold_from_histogram(hist: np.ndarray) -> int:
     """Compute Otsu threshold using only histogram counts"""
     total = int(hist.sum())

@@ -31,6 +31,7 @@ def _shift_with_zero_padding(binary: np.ndarray, dy: int, dx: int) -> np.ndarray
     return shifted
 
 
+#  grows the white regions
 def binary_dilation(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
     """Binary dilation with a square structuring element"""
     _validate_kernel_size(kernel_size)
@@ -47,6 +48,7 @@ def binary_dilation(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
     return out
 
 
+# shrinks the white regions
 def binary_erosion(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
     """Binary erosion with a square structuring element"""
     _validate_kernel_size(kernel_size)
@@ -63,6 +65,7 @@ def binary_erosion(mask: np.ndarray, kernel_size: int = 3) -> np.ndarray:
     return out
 
 
+# fills small holes in the white regions
 def binary_closing(mask: np.ndarray, kernel_size: int = 3, iterations: int = 1) -> np.ndarray:
     """Binary closing: dilation followed by erosion"""
     out = _as_binary(mask)
@@ -73,6 +76,7 @@ def binary_closing(mask: np.ndarray, kernel_size: int = 3, iterations: int = 1) 
     return out
 
 
+# removes small objects from the white regions
 def binary_opening(mask: np.ndarray, kernel_size: int = 3, iterations: int = 1) -> np.ndarray:
     """Binary opening: erosion followed by dilation"""
     out = _as_binary(mask)
