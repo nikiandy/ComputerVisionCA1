@@ -72,6 +72,7 @@ def process_image(
 ) -> ImageSummary:
     """Run full O-ring pipeline for one image"""
     t0 = time.perf_counter()
+    # load image
     image = load_bgr_image(image_path)
     if image is None:
         elapsed = (time.perf_counter() - t0) * 1000.0
@@ -86,6 +87,7 @@ def process_image(
             note="unreadable image",
         )
 
+    # grayscale img
     gray = bgr_to_grayscale(image)
     threshold, _hist = otsu_threshold(gray)
     raw_mask, inverted, fg_ratio = threshold_with_auto_polarity(

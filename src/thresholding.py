@@ -5,6 +5,7 @@ from typing import Tuple
 import numpy as np
 
 
+# grayscale image
 def bgr_to_grayscale(image_bgr: np.ndarray) -> np.ndarray:
     """Convert BGR image to uint8 grayscale without cv2.cvtColor"""
     # split channels

@@ -9,3 +9,5 @@ install:
 
 run:
 `python main.py`
+
+GitHub link: https://github.com/nikiandy/ComputerVisionCA1
